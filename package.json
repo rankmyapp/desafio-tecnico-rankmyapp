@@ -1,0 +1,27 @@
+{
+  "name": "desafio-tecnico-rankmyapp",
+  "version": "1.0.0",
+  "description": "<div align=\"center\">\r   <br>\r   <img src=\"https://yt3.ggpht.com/SwG0Lofb6Qx5p3kHTWDLkIqJo2vly7dpAAwk2_CKb_Resx2TLc5DSfPsU37jfjqpcGs7lTFV=s900-c-k-c0x00ffffff-no-rj\" alt=\"RankMyApp\" width=\"200\">\r   <br />\r   <h1 style=\"font-size: 38px;\"># Desafio Tecnico - RankMyApp 2024</h1>\r   <p>Este documento descreve o desafio técnico ao candidato para a vaga de pessoa desenvolvedora - RankyMyApp</p>\r </div>",
+  "main": "server.js",
+  "scripts": {
+    "test": "jest",
+    "start": "tsnd --respawn --transpile-only ./src/infra/server.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/mysql": "^2.15.26",
+    "express": "^4.21.1",
+    "mysql": "^2.18.1"
+  },
+  "devDependencies": {
+    "@jest/globals": "^29.7.0",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.9.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.2.5",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.6.3"
+  }
+}
