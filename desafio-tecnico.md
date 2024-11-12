@@ -1,66 +1,92 @@
-# Desafio Ténico
+# Teste Técnico - Desenvolvedor Senior Backend (Node.js)
 
-## API de Tickets
+## Objetivo
 
-Uma banda está se preparando para realizar um show em um grande estádio de futebol, antes será necessário a venda dos ingressos, você foi contratado para desenvolver
-um API de Vendas de Tickets para um esse Show.
+Este teste tem como objetivo avaliar suas habilidades em desenvolvimento de aplicações descentralizadas, qualidade de software e entrega com testes. 
 
-### Especificações da API
+Você deverá desenvolver um serviço que também servira recursos através de uma API REST, e terá alguma das operações de CRUD como (Create, Read, Update, Delete) sobre um recurso de **usuários**. e um serviço que irá receber uma mensagem via fila e irá enviar enviar um e-mail
 
-Considerações gerais:
+1. Fork este repositório (ou crie um novo) e, ao finalizar, envie o link do repositório para a avaliação.
+2. Você deverá utilizar **Node.js** puro com **Express.js**, **Fastify.js**, para criação dos serviços
+3. O banco de dados pode ser **MongoDB** ou **PostgreSQL** ou **MySQL**.
+4. Utilize **JWT** para autenticação e proteção de rotas.
+5. Inclua testes unitários para as principais funcionalidades da aplicação.
+6. O uso de bibliotecas populares como **Yup** para validação de dados e **Mongoose** (caso use MongoDB) é recomendado, mas não obrigatório.
+7. Escreva um Dockerfile
+8. Escreva uma stack de serviços com Docker Compose, contemplando os serviços que você irá precisar.
+9. Crie conexão com o RabbitMQ, para envio na fila `email-queue` que o serviço de e-mail irá receber e disparar um e-mail
 
-* Tipos de Ticket (General Area, Grandstand, VIP, Golden Circle)
+## Requisitos do Projeto
 
-| Ticket                | *R$* |
-| ----------------------| ---- |
-| General Area          | 95   |
-| Grandstand            | 175  |
-| VIP                   | 750  |
-| Golden Circle         | 1250 |
+### Funcionalidades do Serviço de E-mail:
 
-* A compra deverá ser realizada por unidade, enviando o Ticket e Informações de Pagamento que identifique o cliente.
-* Ao realizar a compra de um ticket, deve-se registrar uma venda.
-* Aceitaremos apenas pagamento por cartão de crédito.
+1. **Enviar um e-mail de Bem vindo ao Usuário (Sign Up)**
+   - Conectar no RabbitMQ
+   - Receber um mensagens (consumer) de envio de e-mail na fila `email-queue`
+   - Enviar e-mail via SMTP
 
-* No estoque teremos um limite de Tickets disponíveis, ao se atingir de tickets vendidos a API não deverá permitir registrar uma venda.
+### Funcionalidades do Serviço de Autenticação:
 
-| Ticket                | *QTD* |
-| ----------------------| ----- |
-| General Area          | 10    |
-| Grandstand            | 5     |
-| VIP                   | 2     |
-| Golden Circle         | 1     |
+1. **Registrar Usuário (Sign Up)**
+   - Rota: `POST /api/auth/signup`
+   - Campos obrigatórios: `nome`, `email`, `senha`
+   - Validação:
+     - O campo `email` deve ser único.
+     - A senha deve ter no mínimo 6 caracteres.
 
-* Ao realizar uma venda deverá ser publicada uma mensagem para um sistema validador através de uma fila, chamada "validate-purchase".
+2. **Buscar Usuário Autenticado**
+   - Rota: `GET /api/account/me`
+   - Deve retornar os dados do usuário especificado pelo `id`.
 
-#### Endpoints
+3. **Autenticar um usuário**
+   - Rota: `POST /api/auth/signin`
+   - Permite remover um usuário específico.
 
-##### 1. Criar um endpoint para registrar a venda de um ticket
+4. **Envio do e-mail de bem vindo**
+   - Conectar no RabbitMQ
+   - Enviar uma mensagem (producer) de envio do e-mail na fila `email-queue` para novos usuários
 
-**Request:** 
+### Regras de Autenticação:
 
-```POST http://localhost:3000/api/v1/tickets/buy```
+- Apenas usuários autenticados podem acessar as rotas de listagem, busca, atualização e remoção de usuários.
+- Utilize JWT para gerar e validar tokens de autenticação.
+- Rota para login:
+- **Login**
+- Rota: `POST /api/signin`
+- Parâmetros: `email`, `senha`
+- Retorna: Token JWT válido para autenticação.
 
-+ Body:
+### Requisitos Extras (Bônus):
 
-```json
-{
-    "ticketId": "<ID>",
-    "payment_type": "CREDIT_CARD",
-    "userId": ""
-}
-```
+- **Paginação**: Implementar paginação na listagem de usuários.
+- **Filtros de Pesquisa**: Permitir a busca de usuários por nome ou e-mail através de query params.
+- **Log de Erros**: Implementar um sistema básico de log de erros.
 
-**Response:**
+---
 
-O response para esta função será definido por você e **faz parte da avaliação**.
+## Testes Unitários
 
-##### 2. Criar um endpoint para retornar o catálogo de tickets (Com o estoque disponível)
+Implemente testes para as principais funcionalidades da API, utilizando um framework de testes como **Jest** ou **Mocha**:
 
-**Request:** 
+- Teste as rotas na autenticação, atualização e deleção de conta.
+- Teste a autenticação JWT (Opcional).
+- Teste a validação de dados (como e-mail único e tamanho da senha).
 
-```GET http://localhost:9000/api/v1/tickets/catalog```
+---
 
-**Response:**
+## O que será avaliado:
 
-O response para esta função será definido por você e **faz parte da avaliação**.
+- Estrutura e organização do código.
+- Boas práticas na implementação da API (RESTful, uso correto de status HTTP, etc.).
+- Conhecimento de autenticação com JWT.
+- Validação e tratamento de erros.
+- Implementação de testes unitários.
+- Documentação básica da API (ex.: README com instruções de uso).
+
+---
+
+## Entrega:
+
+Ao finalizar o teste, por favor envie um link para o repositório GitHub com o código desenvolvido.
+
+
