@@ -8,6 +8,16 @@ services:
             - 27017:27017
         networks:
             - default-services
+    mysql:
+        image: mysql:8.0
+        command: --default-authentication-plugin=mysql_native_password
+        environment:
+          - MYSQL_DATABASE=auth_db
+          - MYSQL_USER=auth
+          - MYSQL_PASSWORD=password
+          - MYSQL_ROOT_PASSWORD=root
+        ports:
+          - "3306:3306"
 
     rabbitmq:
         image: rabbitmq:3.7-management
