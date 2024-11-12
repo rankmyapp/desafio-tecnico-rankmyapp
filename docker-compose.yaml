@@ -19,6 +19,15 @@ services:
         ports:
           - "3306:3306"
 
+    mailcatcher:
+      container_name: mailcatcher
+      image: schickling/mailcatcher
+      ports:
+          - 1080:1080
+          - 1025:1025
+      networks:
+          - default-services
+
     rabbitmq:
         image: rabbitmq:3.7-management
         container_name: rabbitmq
