@@ -1,0 +1,25 @@
+services:
+
+  database:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 123
+
+  rabbitmq:
+    image: "rabbitmq:3.8-management-alpine"
+    container_name: rabbitmq
+    hostname: rabbitmq
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    volumes:
+      - "./.rabbitmq_data:/var/lib/rabbitmq/mnesia"
+  tickets-api:
+    build: ./tickets-api
+    container_name: tickets-api
+    ports:
+      - "3000:3000"
+    depends_on:
+      - rabbitmq
+
