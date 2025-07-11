@@ -7,7 +7,7 @@ Este teste tem como objetivo avaliar suas habilidades em desenvolvimento de apli
 Você deverá desenvolver um serviço que também servira recursos através de uma API REST, e terá alguma das operações de CRUD como (Create, Read, Update, Delete) sobre um recurso de **usuários**. e um serviço que irá receber uma mensagem via fila e irá enviar enviar um e-mail
 
 1. Fork este repositório (ou crie um novo) e, ao finalizar, envie o link do repositório para a avaliação.
-2. Você deverá utilizar **Node.js** puro com **Express.js**, **Fastify.js**, para criação dos serviços
+2. Você deverá utilizar **Node.js** puro com **Express.js**, **Fastify.js** ou **Go**, para criação dos serviços
 3. O banco de dados pode ser **MongoDB** ou **PostgreSQL** ou **MySQL**.
 4. Utilize **JWT** para autenticação e proteção de rotas.
 5. Inclua testes unitários para as principais funcionalidades da aplicação.
