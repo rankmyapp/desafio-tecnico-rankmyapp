@@ -1,0 +1,37 @@
+config:
+  target: "http://localhost:8080"
+  processor: "./process.js"
+  plugins:
+    apdex: {}
+    ensure: {}
+  apdex:
+    threshold: 1000
+  ensure:
+    maxErrorRate: 500
+  phases:
+    - duration: 30        # 30s de rampa suave
+      arrivalRate: 20     # Começa com 20 usuários por segundo
+      rampTo: 100         # Aumenta até 100 usuários/segundo
+      name: "Escalada de carga"
+    - duration: 60        # 1 minuto sustentado
+      arrivalRate: 100    # Mantém 100 usuários/segundo
+      name: "Estresse controlado"
+    - duration: 30        # 30s com pico intenso
+      arrivalRate: 150    # 150 usuários/segundo
+      name: "Pico abrupto"
+
+scenarios:
+  - name: "Ticket Purchase Flow"
+    flow:
+      - get:
+          url: "/api/v1/tickets/catalog"
+          capture:
+            json: "$"
+            as: catalogResponse
+      - function: "selectTicket"
+      - post:
+          url: "/api/v1/tickets/buy"
+          json:
+            ticketId: "{{ ticketId }}"
+            paymentType: "CREDIT_CARD"
+            userId: "4af7ebc2-238c-473c-9ae3-541c052ef2fa"
