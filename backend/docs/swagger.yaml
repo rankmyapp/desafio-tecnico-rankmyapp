@@ -1,0 +1,123 @@
+basePath: /api/v1
+definitions:
+  response.ErrorResponse:
+    properties:
+      details:
+        type: string
+      message:
+        type: string
+    type: object
+  sale.ProcessSaleInput:
+    properties:
+      paymentType:
+        type: string
+      ticketId:
+        type: string
+      userId:
+        type: string
+    required:
+    - paymentType
+    - ticketId
+    - userId
+    type: object
+  sale.ProcessSaleOutput:
+    properties:
+      paymentType:
+        type: string
+      saleId:
+        type: string
+      ticketId:
+        type: string
+      userId:
+        type: string
+    type: object
+  ticket.TicketOutput:
+    properties:
+      id:
+        type: string
+      price:
+        type: number
+      quantity:
+        type: integer
+      type:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: taviomartins01@gmail.com
+    name: Otavio Martins
+  description: Documentação da API REST para o desafio da RankMyApp
+  license:
+    name: MIT
+  title: API - Desafio RankMyApp
+  version: "1.0"
+paths:
+  /:
+    get:
+      description: Endpoint de health check para confirmar se a API está rodando
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Verifica o status da API
+      tags:
+      - Health
+  /tickets/buy:
+    post:
+      consumes:
+      - application/json
+      description: Registra uma venda e publica na fila de validação via RabbitMQ
+      parameters:
+      - description: Informações da venda (somente pagamento com cartão de crédito)
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/sale.ProcessSaleInput'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/sale.ProcessSaleOutput'
+        "400":
+          description: Payload inválido (JSON malformado)
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "422":
+          description: Erro ao processar venda (falta de estoque, ticket inexistente,
+            etc)
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Realiza a compra de um ticket
+      tags:
+      - Sales
+  /tickets/catalog:
+    get:
+      description: Retorna todos os ingressos cujo estoque seja maior que zero
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/ticket.TicketOutput'
+            type: array
+        "500":
+          description: Erro interno ao buscar catálogo de tickets
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Lista o catálogo de tickets disponíveis
+      tags:
+      - Tickets
+schemes:
+- http
+swagger: "2.0"
