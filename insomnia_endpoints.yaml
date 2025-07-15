@@ -1,0 +1,120 @@
+type: collection.insomnia.rest/5.0
+name: RankMyApp
+meta:
+  id: wrk_213976fc9c954a58920d6026e16de0fc
+  created: 1752526681505
+  modified: 1752526681505
+  description: ""
+collection:
+  - name: V1
+    meta:
+      id: fld_ade944520353433f85bce570917ec9a3
+      created: 1752526822386
+      modified: 1752526822386
+      sortKey: -1752526822386
+      description: ""
+    children:
+      - name: HEALTH CHECK
+        meta:
+          id: fld_9515617539b84796bbb70c3ee8106e8b
+          created: 1752526863112
+          modified: 1752526895153
+          sortKey: -1752526878217
+          description: ""
+        children:
+          - url: "{{ _.API_LOCAL }}/api/v1/"
+            name: /
+            meta:
+              id: req_2213140befa440868f84273385cdc0ee
+              created: 1752526897189
+              modified: 1752526930073
+              isPrivate: false
+              description: ""
+              sortKey: -1752526897189
+            method: GET
+            headers:
+              - name: User-Agent
+                value: insomnia/11.3.0
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+      - name: TICKETS
+        meta:
+          id: fld_e3f2843f50ac4cdbb41b038f3c472524
+          created: 1752526878117
+          modified: 1752527164912
+          sortKey: -1752526878117
+          description: ""
+        children:
+          - url: "{{ _.API_LOCAL }}/api/v1/tickets/catalog"
+            name: /catalog
+            meta:
+              id: req_e10bff7e98a54788b2306904eb6e04bc
+              created: 1752527111181
+              modified: 1752527169921
+              isPrivate: false
+              description: ""
+              sortKey: -1752527111181
+            method: GET
+            headers:
+              - name: User-Agent
+                value: insomnia/11.3.0
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: "{{ _.API_LOCAL }}/api/v1/tickets/buy"
+            name: /buy
+            meta:
+              id: req_94d44336ae8f4260b726042b16240f76
+              created: 1752529117342
+              modified: 1752568527081
+              isPrivate: false
+              description: ""
+              sortKey: -1752529117342
+            method: POST
+            body:
+              mimeType: application/json
+              text: |
+                {
+                  "ticketId": "<uuid_ticket>",
+                	"paymentType": "CREDIT_CARD",
+                	"userId": "4af7ebc2-288c-473c-9ae3-541c052ef2fa"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/11.3.0
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_541ccc4888ff73c54e90368f9da476de2884e46c
+    created: 1752526681510
+    modified: 1752526681510
+environments:
+  name: Base Environment
+  meta:
+    id: env_541ccc4888ff73c54e90368f9da476de2884e46c
+    created: 1752526681508
+    modified: 1752526764456
+    isPrivate: false
+  data:
+    API_LOCAL: http://localhost:8080
