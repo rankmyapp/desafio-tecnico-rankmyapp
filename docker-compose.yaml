@@ -1,23 +1,68 @@
-version: '3.5'
-
 services:
-    mongo:
-        container_name: mongo
-        image: mongo
-        ports:
-            - 27017:27017
-        networks:
-            - default-services
-    mysql:
-        image: mysql:8.0
-        command: --default-authentication-plugin=mysql_native_password
-        environment:
-          - MYSQL_DATABASE=tickets_db
-          - MYSQL_USER=tickets_user
-          - MYSQL_PASSWORD=tickets_passwd
-          - MYSQL_ROOT_PASSWORD=root
-        ports:
-          - "3306:3306"
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      - ENVIRONMENT=production
+      - MYSQL_URL=${MYSQL_USER}:${MYSQL_PASSWORD}@tcp(${MYSQL_HOST}:${MYSQL_PORT})/${MYSQL_DATABASE}
+      - RABBITMQ_URL=amqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_HOST}:${RABBITMQ_PORT}/
+      - API_PORT=${API_PORT}
+      - GIN_MODE=${GIN_MODE}
+    networks:
+      - default-services
+    ports:
+      - "${API_PORT}:8080"
+    depends_on:
+      mysql:
+        condition: service_healthy
+      rabbit:
+        condition: service_healthy
+
+  rabbit:
+    container_name: rabbit
+    image: rabbitmq:4.1-management
+    restart: always
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
+    networks:
+      - default-services
+    ports:
+      - "${RABBITMQ_MANAGEMENT_PORT}:15672"
+      - "${RABBITMQ_PORT}:5672"
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  mysql:
+    container_name: mysql
+    image: mysql:8.0
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - default-services
+    ports:
+      - "${MYSQL_PORT}:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  mongo_data:
+  mysql_data:
 
 networks:
     default-services:
