@@ -9,7 +9,12 @@ Este desafio é voltado para pessoas desenvolvedoras seniores, e o foco está em
 Construa uma aplicação web que simula um dashboard de performance de aplicativos mobile, onde é possível:
 
 **Funcionalidades mínimas:**
-Cadastro de aplicativos: nome, categoria, plataforma (iOS/Android), URL.
+
+Cadastro de aplicativos: 
+- nome
+- categoria
+- plataforma (iOS/Android)
+- URL
 
 Visualização de métricas simuladas:
 
