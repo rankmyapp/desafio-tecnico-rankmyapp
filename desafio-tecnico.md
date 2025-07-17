@@ -1,4 +1,4 @@
-# # # Teste Técnico - Desenvolvedor Senior Front (React.js)
+### Teste Técnico - Desenvolvedor Senior Front (React.js)
 
 Queremos avaliar sua capacidade de projetar e desenvolver uma aplicação web completa, modular e escalável, com foco em arquitetura limpa, boas práticas, tipagem forte com TypeScript e adoção de princípios como DDD e SOLID.
 
