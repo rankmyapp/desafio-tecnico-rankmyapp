@@ -6,36 +6,68 @@
   <p>Este documento descreve o desafio técnico ao candidato para a vaga de pessoa desenvolvedora - RankyMyApp</p>
 </div>
 
+## Desafio Técnico – Pessoa Desenvolvedora Front-End
+RankMyApp
+
 ## Considerações sobre o desafio
 
-- Ir direto ao ponto.
-- Aplicar **boas práticas de código** e de reuso **sempre que possível**.
-- Poderá utilizar uma das seguintes linguages de Programação ou Plataformas de Execução: Next.js, TypeScript, tailwind
-- Utilização de containers (Docker) é primordial para a avaliação.
-- Em relação aos dados, estes poderão ser armazenados em memória durante a execução do desafio ou em banco de dados (relacional, não-relacional, chave-valor etc.). Escolha o que achar que faz mais sentido para o problema.
-- Escreva um README.md (Markdown) para documentar a aplicação, configuração do ambiente, execução e build.
-- Ao finalizar o desafio e o executar corretamente, o código produzidor deverá ser enviado com um PR para o repositório em questão, no seguinte padrão `<GITHUB_USERNAME>/FrontEnd-challenge`
+Vá direto ao ponto.
+
+**Aplique boas práticas de código**, componentização e reutilização sempre que possível.
+
+A aplicação deverá ser desenvolvida utilizando React (com ou sem frameworks como Next.js).
+
+A utilização de containers (Docker) é fundamental para a avaliação.
+
+O armazenamento de dados pode ser feito em memória, utilizando o próprio estado da aplicação (useState, Redux, Zustand etc.) ou com alguma persistência local (localStorage, IndexedDB). Use a abordagem que fizer mais sentido para o problema.
+
+Escreva um README.md claro e objetivo, contendo:
+
+Como configurar o ambiente
+
+Como rodar a aplicação localmente
+
+Como executar o build de produção
+
+Importante: Ao finalizar o desafio e executá-lo corretamente, envie o código através de um Pull Request para o repositório indicado, utilizando o seguinte padrão:
+<GITHUB_USERNAME>/frontend-challenge
 
 ## Desafio
-
-O desafio pode ser acessado através da senioridade da vaga e no arquivo `desafio-tecnico.md`.
+O enunciado do desafio pode ser acessado através do link fornecido no momento da aplicação.
 
 ## Avaliação
+A sua solução será avaliada em duas etapas:
 
-A sua solução será avaliada durante a execução do desafio (Live Coding) e posteriormente pelo time ténico aqui da RankyMyApp, com base nos seguintes critérios:
+Durante a execução do desafio
 
-### Execução
+Posteriormente, pelo time técnico da RankMyApp
 
-- **Objetivo:** A solução antingiu o objetivo?
-- **Execução:** A solução enviada contém todas as instruções necessárias para executarmos sua solução? Todos os requisitos foram implementados na solução entregue?
-- **Build:** A solução contém instruções claras para configurarmos o ambiente e fazer o build?
-- **Performance:** A solução possui uma performance adequada?
+Os critérios abaixo serão levados em consideração:
 
-### Código
+## Execução
 
-- **Manutenibilidade e extensibilidade:** O código escrito é de fácil leitura? O quão fácil é criar novas funcionalidades na solução existente?
-- **Arquitetura e Design:** Como está desenhada a arquitetura da solução? As responsabilidades estão bem definidas? Foi utilizada alguma técnica para guiar o desenvolvimento?
+**Objetivo**: A solução atinge os requisitos propostos?
 
-Desejamos todo sucesso a você candidato e esperamos que você se divirta codificando essa solução. Qualquer duvida sobre o desafio pode ser levantada no momento da aplicação do desafio em conjunto com o avaliador no momento.
+**Completude**: Todas as funcionalidades descritas foram implementadas?
+
+**Instruções**: A aplicação contém todas as instruções para ser executada localmente com sucesso?
+
+**Build**: O processo de build está claro e funcional?
+
+**Performance**: A performance da aplicação é satisfatória (carregamento, reatividade, otimizações básicas)?
+
+## Código
+
+**Legibilidade e organização**: O código é de fácil leitura e bem estruturado?
+
+**Reusabilidade**: Há preocupação com componentização e reaproveitamento de lógica?
+
+**Arquitetura e Design**: A arquitetura do front-end é bem definida (pastas, componentes, separação de responsabilidades)?
+
+**Boas práticas**: Foram utilizadas práticas modernas de desenvolvimento Front-End? (hooks, controle de estado, tipagem se aplicável, acessibilidade, responsividade, testes etc.)
+
+Desejamos todo sucesso a você, candidato(a), e esperamos que se divirta codando essa solução.
+
+Em caso de dúvidas, você poderá saná-las junto ao avaliador durante a aplicação do desafio.
 
 Bom código! 😄⚡
