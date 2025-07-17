@@ -10,11 +10,11 @@
 
 - Ir direto ao ponto.
 - Aplicar **boas práticas de código** e de reuso **sempre que possível**.
-- Poderá utilizar uma das seguintes linguages de Programação ou Plataformas de Execução: Node.js ou GoLang
+- Poderá utilizar uma das seguintes linguages de Programação ou Plataformas de Execução: Next.js, TypeScript, tailwind
 - Utilização de containers (Docker) é primordial para a avaliação.
 - Em relação aos dados, estes poderão ser armazenados em memória durante a execução do desafio ou em banco de dados (relacional, não-relacional, chave-valor etc.). Escolha o que achar que faz mais sentido para o problema.
 - Escreva um README.md (Markdown) para documentar a aplicação, configuração do ambiente, execução e build.
-- Ao finalizar o desafio e o executar corretamente, o código produzidor deverá ser enviado com um PR para o repositório em questão, no seguinte padrão `<GITHUB_USERNAME>/backend-challenge`
+- Ao finalizar o desafio e o executar corretamente, o código produzidor deverá ser enviado com um PR para o repositório em questão, no seguinte padrão `<GITHUB_USERNAME>/FrontEnd-challenge`
 
 ## Desafio
 
