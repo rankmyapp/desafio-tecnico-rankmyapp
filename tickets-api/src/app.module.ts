@@ -7,7 +7,11 @@ import { TicketsController } from './tickets/tickets.controller';
 import { TicketsService } from './tickets/tickets.service';
 import { TicketsModule } from './tickets/tickets.module';
 import { User } from './users/users.entity';
-import { Tickets } from './tickets/tickets.entity';
+import { Ticket } from './tickets/tickets.entity';
+import { Order } from './orders/orders.entity';
+import { OrdersModule } from './orders/orders.module';
+import { OrdersController } from './orders/orders.controller';
+import { OrdersService } from './orders/orders.service';
 
 @Module({
   imports: [
@@ -15,15 +19,16 @@ import { Tickets } from './tickets/tickets.entity';
       type: 'mysql',
       host: 'mysql_db',
       database: 'database',
-      entities: [User, Tickets],
+      entities: [User, Ticket, Order],
       synchronize: true,
       username: 'daniel',
       password: '123',
     }),
     UsersModule,
     TicketsModule,
+    OrdersModule,
   ],
-  controllers: [AppController, TicketsController],
-  providers: [AppService, TicketsService],
+  controllers: [AppController, TicketsController, OrdersController],
+  providers: [AppService, TicketsService, OrdersService],
 })
 export class AppModule {}

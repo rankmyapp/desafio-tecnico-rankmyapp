@@ -1,21 +1,18 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class Ticket {
+export class Order {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
-  type: string;
+  originId: number; // The entity Id that was purchased
 
   @Column()
-  availableUnits: string;
+  origin: string; // The entity name that was purchased
 
   @Column()
-  name: string;
-
-  @Column()
-  description: string;
+  status: string; // purchase status
 
   @Column()
   createdAt: Date;
