@@ -11,7 +11,8 @@ export class UsersService {
     this.repo = repo;
   }
 
-  create(email: string, password: string) {
+  create(params: { email: string; password: string }) {
+    const { email, password } = params;
     const user = this.repo.create({
       email,
       password,
