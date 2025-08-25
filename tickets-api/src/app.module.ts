@@ -12,9 +12,16 @@ import { Order } from './orders/orders.entity';
 import { OrdersModule } from './orders/orders.module';
 import { OrdersController } from './orders/orders.controller';
 import { OrdersService } from './orders/orders.service';
+import { JwtModule } from '@nestjs/jwt';
+import { jwtConstants } from './users/auth/constants';
 
 @Module({
   imports: [
+    JwtModule.register({
+      global: true,
+      secret: jwtConstants.secret,
+      signOptions: { expiresIn: '60s' },
+    }),
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'mysql_db',
