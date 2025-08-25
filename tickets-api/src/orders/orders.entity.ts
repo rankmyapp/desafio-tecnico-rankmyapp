@@ -1,4 +1,12 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Ticket } from 'src/tickets/tickets.entity';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToOne,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity()
 export class Order {
@@ -6,17 +14,20 @@ export class Order {
   id: number;
 
   @Column()
-  originId: number; // The entity Id that was purchased
-
-  @Column()
-  origin: string; // The entity name that was purchased
+  ticketId: number; // The entity Id that was purchased
 
   @Column()
   status: string; // purchase status
 
-  @Column()
+  // @Column()
+  // units: string; // purchase status
+
+  @CreateDateColumn()
   createdAt: Date;
 
-  @Column()
+  @UpdateDateColumn()
   updatedAt: Date;
+
+  @OneToOne(() => Ticket, (ticket) => ticket.id)
+  ticket: Ticket;
 }
