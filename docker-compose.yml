@@ -6,9 +6,9 @@ services:
       - "3306:3306"
     environment:
       - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=database
+      - MYSQL_DATABASE=mydb
       - MYSQL_USER=daniel
-      - MYSQL_PASSWORD=123
+      - MYSQL_PASSWORD=daniel
 
   redis:
     image: redis:alpine

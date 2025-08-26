@@ -4,7 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { Ticket } from './tickets.entity';
+import { Ticket, TicketsType } from './tickets.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { OrdersService } from 'src/orders/orders.service';
 import { InjectQueue } from '@nestjs/bullmq';
@@ -19,7 +19,7 @@ export class TicketsService {
   ) {}
 
   create(params: {
-    type: string;
+    type: TicketsType;
     availableUnits: number;
     price: number;
     name?: string;

@@ -23,11 +23,11 @@ import { BullQueueModule } from './bull/bull.module';
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'mysql_db',
-      database: 'database',
+      database: 'mydb',
       entities: [User, Ticket, Order],
       synchronize: true,
       username: 'daniel',
-      password: '123',
+      password: 'daniel',
     }),
     UsersModule,
     TicketsModule,

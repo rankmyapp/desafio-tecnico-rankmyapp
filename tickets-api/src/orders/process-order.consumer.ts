@@ -8,11 +8,11 @@ export class ProcessOrderConsumer extends WorkerHost {
     
     if (job.name === 'buy-ticket') {
       // const progress = 0;
-      for (let i = 0; i < 100; i++) {
+      // for (let i = 0; i < 100; i++) {
         console.log('CHEGOU A MSG', job.data);
         // progress += 1;
         // await job.progress(progress);
-      }
+      // }
     }
     
     return {};

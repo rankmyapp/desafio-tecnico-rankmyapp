@@ -1,8 +1,11 @@
-import { IsNumber, IsString } from 'class-validator';
+import { IsEnum, IsNumber, IsString } from 'class-validator';
+import { TicketsType } from '../tickets.entity';
 
 export class CreateTicketDto {
-  @IsString()
-  type: string;
+  @IsEnum(TicketsType, {
+    message: 'Type must be one of: generalArea, grandStand, vip, goldenCircle',
+  })
+  type: TicketsType;
 
   @IsNumber()
   availableUnits: number;

@@ -6,11 +6,11 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-enum TicketsType {
-  generalArea = 'General Area',
-  grandStand = 'Grandstand',
-  vip = 'VIP',
-  goldenCircle = 'Golden Circle',
+export enum TicketsType {
+  generalArea = 'generalArea',
+  grandStand = 'grandStand',
+  vip = 'vip',
+  goldenCircle = 'goldenCircle',
 }
 
 @Entity()
@@ -21,8 +21,9 @@ export class Ticket {
   @Column({
     type: 'enum',
     enum: TicketsType,
+    enumName: 'tickets_type_enum'
   })
-  type: string;
+  type: TicketsType;
 
   @Column()
   availableUnits: number;

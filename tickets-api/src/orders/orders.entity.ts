@@ -32,8 +32,8 @@ export class Order {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @OneToOne(() => Ticket, (ticket) => ticket.id)
-  @JoinColumn()
+  @ManyToOne(() => Ticket)
+  @JoinColumn({ name: 'ticketId' })
   ticket: Ticket;
 
   @ManyToOne(() => User, (user) => user.orders)
