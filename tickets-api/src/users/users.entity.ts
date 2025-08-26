@@ -1,4 +1,5 @@
 import { Exclude } from 'class-transformer';
+import { Order } from 'src/orders/orders.entity';
 import {
   Entity,
   Column,
@@ -7,6 +8,7 @@ import {
   AfterInsert,
   AfterRemove,
   AfterUpdate,
+  OneToMany,
 } from 'typeorm';
 
 @Entity()
@@ -26,6 +28,9 @@ export class User {
 
   @CreateDateColumn()
   updatedAt: Date;
+
+  @OneToMany(() => Order, (order) => order.user)
+  orders: Order[];
 
   @AfterInsert()
   logInsert() {

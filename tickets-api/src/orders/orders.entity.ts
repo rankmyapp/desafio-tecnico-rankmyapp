@@ -1,4 +1,5 @@
 import { Ticket } from 'src/tickets/tickets.entity';
+import { User } from 'src/users/users.entity';
 
 import {
   Entity,
@@ -7,6 +8,8 @@ import {
   OneToOne,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 
 @Entity()
@@ -20,6 +23,9 @@ export class Order {
   @Column()
   status: string; // purchase status
 
+  @Column()
+  userId: number; // The user who made the order
+
   @CreateDateColumn()
   createdAt: Date;
 
@@ -27,5 +33,10 @@ export class Order {
   updatedAt: Date;
 
   @OneToOne(() => Ticket, (ticket) => ticket.id)
+  @JoinColumn()
   ticket: Ticket;
+
+  @ManyToOne(() => User, (user) => user.orders)
+  @JoinColumn({ name: 'userId' })
+  user: User;
 }

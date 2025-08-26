@@ -62,7 +62,7 @@ export class TicketsService {
   }
 
   async buy(params: { ticketId: number; userId: number }) {
-    const { ticketId } = params;
+    const { ticketId, userId } = params;
 
     const ticket = await this.repo.findOneBy({
       id: ticketId,
@@ -79,6 +79,7 @@ export class TicketsService {
     await this.ordersService.create({
       status: 'pendingPayment',
       ticketId: ticket.id,
+      userId,
     });
 
     // Call the producer Here

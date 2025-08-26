@@ -11,22 +11,42 @@ export class OrdersService {
     this.repo = repo;
   }
 
-  create(params: { ticketId: number; status: string }) {
-    const { ticketId, status } = params;
+  create(params: { ticketId: number; status: string; userId: number }) {
+    const { ticketId, status, userId } = params;
     const order = this.repo.create({
       ticketId,
       status,
+      userId,
     });
 
     return this.repo.save(order);
   }
 
   findOne(id: number) {
-    return this.repo.findOneBy({ id });
+    return this.repo.findOne({ 
+      where: { id },
+      relations: ['user', 'ticket']
+    });
   }
 
   find(filters: Partial<Order> = {}) {
-    return this.repo.find({ where: filters });
+    return this.repo.find({ 
+      where: filters,
+      relations: ['user', 'ticket']
+    });
+  }
+  
+  findByUserId(userId: number) {
+    return this.repo.find({
+      where: { userId },
+      relations: ['user', 'ticket']
+    });
+  }
+  
+  countByUserId(userId: number) {
+    return this.repo.count({
+      where: { userId }
+    });
   }
 
   async update(id: number, params: Partial<Order>) {
