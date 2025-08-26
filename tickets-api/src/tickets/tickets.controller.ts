@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import { TicketsService } from './tickets.service';
 import { CreateTicketDto } from './dtos/create-ticket.dto';
+import { BuyTicketDto } from './dtos/buy-ticket.dto';
 
 @Controller('tickets')
 export class TicketsController {
@@ -37,5 +38,10 @@ export class TicketsController {
   @Delete('/:id')
   remove(@Param('id') id: string) {
     return this.ticketsService.remove(parseInt(id));
+  }
+
+  @Post('/buy')
+  buy(@Body() body: BuyTicketDto) {
+    return this.ticketsService.buy(body);
   }
 }

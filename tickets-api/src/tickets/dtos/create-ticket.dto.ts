@@ -1,18 +1,22 @@
-import { IsString } from 'class-validator';
+import { IsNumber, IsString } from 'class-validator';
 
 export class CreateTicketDto {
   @IsString()
   type: string;
 
-  @IsString()
-  availableUnits: string;
+  @IsNumber()
+  availableUnits: number;
 
-  @IsString()
+  @IsNumber()
   price: number;
 
-  @IsString()
+  @IsString({
+    always: false,
+  })
   name?: string;
 
-  @IsString()
+  @IsString({
+    always: false,
+  })
   description?: string;
 }

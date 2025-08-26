@@ -1,4 +1,5 @@
 import { Ticket } from 'src/tickets/tickets.entity';
+
 import {
   Entity,
   Column,
@@ -18,9 +19,6 @@ export class Order {
 
   @Column()
   status: string; // purchase status
-
-  // @Column()
-  // units: string; // purchase status
 
   @CreateDateColumn()
   createdAt: Date;

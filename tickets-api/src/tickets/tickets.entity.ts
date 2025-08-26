@@ -25,7 +25,7 @@ export class Ticket {
   type: string;
 
   @Column()
-  availableUnits: string;
+  availableUnits: number;
 
   @Column()
   price: number;

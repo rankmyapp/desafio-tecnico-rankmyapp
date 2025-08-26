@@ -1,19 +1,23 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Ticket } from './tickets.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { OrdersService } from 'src/orders/orders.service';
 
 @Injectable()
 export class TicketsService {
-  private repo: Repository<Ticket>;
-
-  constructor(@InjectRepository(Ticket) repo: Repository<Ticket>) {
-    this.repo = repo;
-  }
+  constructor(
+    @InjectRepository(Ticket) private repo: Repository<Ticket>,
+    private ordersService: OrdersService,
+  ) {}
 
   create(params: {
     type: string;
-    availableUnits: string;
+    availableUnits: number;
     price: number;
     name?: string;
     description?: string;
@@ -55,5 +59,30 @@ export class TicketsService {
     }
 
     return this.repo.remove(ticket);
+  }
+
+  async buy(params: { ticketId: number; userId: number }) {
+    const { ticketId } = params;
+
+    const ticket = await this.repo.findOneBy({
+      id: ticketId,
+    });
+
+    if (!ticket) {
+      throw new NotFoundException('Ticket not found!');
+    }
+
+    if (!ticket.availableUnits) {
+      throw new InternalServerErrorException('No tickets available!');
+    }
+
+    await this.ordersService.create({
+      status: 'pendingPayment',
+      ticketId: ticket.id,
+    });
+
+    // Call the producer Here
+
+    return;
   }
 }
