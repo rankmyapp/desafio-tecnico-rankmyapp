@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Req,
   UseGuards,
 } from '@nestjs/common';
 import { TicketsService } from './tickets.service';
@@ -49,7 +50,13 @@ export class TicketsController {
 
   @Post('/buy')
   @UseGuards(AuthGuard)
-  buy(@Body() body: BuyTicketDto) {
-    return this.ticketsService.buy(body);
+  buy(@Body() body: BuyTicketDto, @Req() req) {
+    const userId = req.user.sub as number;
+
+    return this.ticketsService.buy({
+      reqUserId: userId,
+      ticketId: body.ticketId,
+      userId: body.userId,
+    });
   }
 }

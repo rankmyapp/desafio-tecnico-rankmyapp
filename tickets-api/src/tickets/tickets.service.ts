@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Injectable,
   InternalServerErrorException,
   NotFoundException,
@@ -64,8 +65,14 @@ export class TicketsService {
     return this.repo.remove(ticket);
   }
 
-  async buy(params: { ticketId: number; userId: number }) {
-    const { ticketId, userId } = params;
+  async buy(params: { ticketId: number; userId: number; reqUserId: number }) {
+    const { ticketId, userId, reqUserId } = params;
+
+    console.log('INcoming reqUserId', reqUserId);
+
+    if (ticketId !== reqUserId) {
+      throw new BadRequestException('The user id is not the same');
+    }
 
     const ticket = await this.repo.findOneBy({
       id: ticketId,
@@ -79,13 +86,18 @@ export class TicketsService {
       throw new InternalServerErrorException('No tickets available!');
     }
 
-    // Call the producer Here
-
-    await this.processOrdersQueue.add('buy-ticket', {
-      ticketId,
-      userId,
+    const order = await this.ordersService.create({
+      status: 'pendingPayment',
+      ticketId: ticketId,
+      userId: userId,
     });
 
-    return;
+    await this.processOrdersQueue.add('buy-ticket', {
+      orderId: order.id,
+    });
+
+    return {
+      status: order.status,
+    };
   }
 }

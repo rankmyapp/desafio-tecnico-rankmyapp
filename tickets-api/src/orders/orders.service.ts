@@ -23,29 +23,29 @@ export class OrdersService {
   }
 
   findOne(id: number) {
-    return this.repo.findOne({ 
+    return this.repo.findOne({
       where: { id },
-      relations: ['user', 'ticket']
+      relations: ['user', 'ticket'],
     });
   }
 
   find(filters: Partial<Order> = {}) {
-    return this.repo.find({ 
+    return this.repo.find({
       where: filters,
-      relations: ['user', 'ticket']
+      relations: ['user', 'ticket'],
     });
   }
-  
+
   findByUserId(userId: number) {
     return this.repo.find({
       where: { userId },
-      relations: ['user', 'ticket']
+      relations: ['user', 'ticket'],
     });
   }
-  
+
   countByUserId(userId: number) {
     return this.repo.count({
-      where: { userId }
+      where: { userId },
     });
   }
 
