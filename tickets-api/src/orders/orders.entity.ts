@@ -1,11 +1,10 @@
-import { Ticket } from 'src/tickets/tickets.entity';
-import { User } from 'src/users/users.entity';
+import { Ticket } from '../tickets/tickets.entity';
+import { User } from '../users/users.entity';
 
 import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  OneToOne,
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
@@ -18,13 +17,13 @@ export class Order {
   id: number;
 
   @Column()
-  ticketId: number; // The entity Id that was purchased
+  ticketId: number;
 
   @Column()
-  status: string; // purchase status
+  status: string;
 
   @Column()
-  userId: number; // The user who made the order
+  userId: number;
 
   @CreateDateColumn()
   createdAt: Date;
