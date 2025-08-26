@@ -1,5 +1,4 @@
 services:
-
   mysql_db:
     image: mysql
     restart: always
@@ -11,21 +10,17 @@ services:
       - MYSQL_USER=daniel
       - MYSQL_PASSWORD=123
 
-  rabbitmq:
-    image: "rabbitmq:3.8-management-alpine"
-    container_name: rabbitmq
-    hostname: rabbitmq
+  redis:
+    image: redis:alpine
+    container_name: redis
     ports:
-      - "15672:15672"
-      - "5672:5672"
-    volumes:
-      - "./.rabbitmq_data:/var/lib/rabbitmq/mnesia"
+      - "6379:6379"
   tickets-api:
     build: ./tickets-api
     container_name: tickets-api
     ports:
       - "3000:3000"
     depends_on:
-      - rabbitmq
       - mysql_db
+      - redis
 

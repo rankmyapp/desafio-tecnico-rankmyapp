@@ -7,12 +7,15 @@ import { Repository } from 'typeorm';
 import { Ticket } from './tickets.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { OrdersService } from 'src/orders/orders.service';
+import { InjectQueue } from '@nestjs/bullmq';
+import { Queue } from 'bullmq';
 
 @Injectable()
 export class TicketsService {
   constructor(
     @InjectRepository(Ticket) private repo: Repository<Ticket>,
     private ordersService: OrdersService,
+    @InjectQueue('process-orders') private processOrdersQueue: Queue,
   ) {}
 
   create(params: {
@@ -83,6 +86,11 @@ export class TicketsService {
     });
 
     // Call the producer Here
+
+    await this.processOrdersQueue.add('buy-ticket', {
+      ticketId,
+      userId,
+    });
 
     return;
   }

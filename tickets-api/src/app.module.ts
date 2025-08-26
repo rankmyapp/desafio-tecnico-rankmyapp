@@ -10,6 +10,8 @@ import { Order } from './orders/orders.entity';
 import { OrdersModule } from './orders/orders.module';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './users/auth/constants';
+import { BullQueueModule } from './bull/bull.module';
+
 
 @Module({
   imports: [
@@ -30,6 +32,7 @@ import { jwtConstants } from './users/auth/constants';
     UsersModule,
     TicketsModule,
     OrdersModule,
+    BullQueueModule
   ],
   controllers: [AppController],
   providers: [AppService],
