@@ -10,7 +10,7 @@ import { BullModule } from '@nestjs/bullmq';
       },
     }),
     BullModule.registerQueue({
-      name: 'process-orders',
+      name: 'validate-purchase',
     }),
   ],
   exports: [BullModule],

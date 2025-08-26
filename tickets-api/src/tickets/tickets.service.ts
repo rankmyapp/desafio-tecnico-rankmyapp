@@ -16,7 +16,7 @@ export class TicketsService {
   constructor(
     @InjectRepository(Ticket) private repo: Repository<Ticket>,
     private ordersService: OrdersService,
-    @InjectQueue('process-orders') private processOrdersQueue: Queue,
+    @InjectQueue('validate-purchase') private processOrdersQueue: Queue,
   ) {}
 
   create(params: {
