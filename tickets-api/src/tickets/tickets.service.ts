@@ -79,12 +79,6 @@ export class TicketsService {
       throw new InternalServerErrorException('No tickets available!');
     }
 
-    await this.ordersService.create({
-      status: 'pendingPayment',
-      ticketId: ticket.id,
-      userId,
-    });
-
     // Call the producer Here
 
     await this.processOrdersQueue.add('buy-ticket', {
