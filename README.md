@@ -1,41 +1,153 @@
-<div align="center">
-  <br>
-  <img src="https://yt3.ggpht.com/SwG0Lofb6Qx5p3kHTWDLkIqJo2vly7dpAAwk2_CKb_Resx2TLc5DSfPsU37jfjqpcGs7lTFV=s900-c-k-c0x00ffffff-no-rj" alt="RankMyApp" width="200">
-  <br />
-  <h1 style="font-size: 38px;"># Desafio Tecnico - RankMyApp 2024</h1>
-  <p>Este documento descreve o desafio técnico ao candidato para a vaga de pessoa desenvolvedora - RankyMyApp</p>
-</div>
+# 🎟️ Ticket API - Desafio Técnico
 
-## Considerações sobre o desafio
+Este projeto implementa uma **API de Vendas de Tickets** para um show, conforme especificado no teste técnico.  
+A aplicação foi desenvolvida em **Node.js** com **Express** e simula um fluxo de vendas de ingressos, incluindo catálogo, compra e publicação em fila.
 
-- Ir direto ao ponto.
-- Aplicar **boas práticas de código** e de reuso **sempre que possível**.
-- Poderá utilizar uma das seguintes linguages de Programação ou Plataformas de Execução: Node.js ou GoLang
-- Utilização de containers (Docker) é primordial para a avaliação.
-- Em relação aos dados, estes poderão ser armazenados em memória durante a execução do desafio ou em banco de dados (relacional, não-relacional, chave-valor etc.). Escolha o que achar que faz mais sentido para o problema.
-- Escreva um README.md (Markdown) para documentar a aplicação, configuração do ambiente, execução e build.
-- Ao finalizar o desafio e o executar corretamente, o código produzidor deverá ser enviado com um PR para o repositório em questão, no seguinte padrão `<GITHUB_USERNAME>/backend-challenge`
+---
 
-## Desafio
+## 🚀 Tecnologias Utilizadas
+- [Node.js](https://nodejs.org/) (v22+)
+- [Express](https://expressjs.com/)
+- [Nodemon](https://nodemon.io/) (para desenvolvimento)
 
-O desafio pode ser acessado através da senioridade da vaga e no arquivo `desafio-tecnico.md`.
+---
 
-## Avaliação
+## ⚙️ Configuração do Ambiente
 
-A sua solução será avaliada durante a execução do desafio (Live Coding) e posteriormente pelo time ténico aqui da RankyMyApp, com base nos seguintes critérios:
+### Pré-requisitos
+- Node.js v18 ou superior
+- NPM ou Yarn
 
-### Execução
+### Clonar o repositório
+```bash
+git clone https://github.com/seu-usuario/ticket-api.git
+cd ticket-api
+```
 
-- **Objetivo:** A solução antingiu o objetivo?
-- **Execução:** A solução enviada contém todas as instruções necessárias para executarmos sua solução? Todos os requisitos foram implementados na solução entregue?
-- **Build:** A solução contém instruções claras para configurarmos o ambiente e fazer o build?
-- **Performance:** A solução possui uma performance adequada?
+### Instalar dependências
+```bash
+npm install
+```
 
-### Código
+---
 
-- **Manutenibilidade e extensibilidade:** O código escrito é de fácil leitura? O quão fácil é criar novas funcionalidades na solução existente?
-- **Arquitetura e Design:** Como está desenhada a arquitetura da solução? As responsabilidades estão bem definidas? Foi utilizada alguma técnica para guiar o desenvolvimento?
+## ▶️ Execução
 
-Desejamos todo sucesso a você candidato e esperamos que você se divirta codificando essa solução. Qualquer duvida sobre o desafio pode ser levantada no momento da aplicação do desafio em conjunto com o avaliador no momento.
+### Ambiente de Desenvolvimento
+```bash
+npm run dev
+```
+O servidor será iniciado em:
+```
+http://localhost:3000
+```
 
-Bom código! 😄⚡
+### Produção
+```bash
+npm start
+```
+
+---
+
+## 📌 Endpoints
+
+### 1. Listar Catálogo de Tickets
+**GET** `/api/v1/tickets/catalog`
+
+#### Exemplo de Request
+```bash
+curl http://localhost:3000/api/v1/tickets/catalog
+```
+
+#### Exemplo de Response
+```json
+{
+  "success": true,
+  "catalog": [
+    { "id": "1", "name": "General Area", "price": 95, "stock": 10 },
+    { "id": "2", "name": "Grandstand", "price": 175, "stock": 5 },
+    { "id": "3", "name": "VIP", "price": 750, "stock": 2 },
+    { "id": "4", "name": "Golden Circle", "price": 1250, "stock": 1 }
+  ]
+}
+```
+
+---
+
+### 2. Comprar Ticket
+**POST** `/api/v1/tickets/buy`
+
+#### Body (JSON)
+```json
+{
+  "ticketId": "3",
+  "payment_type": "CREDIT_CARD",
+  "userId": "user123"
+}
+```
+
+#### Exemplo de Request (curl)
+```bash
+curl -X POST http://localhost:3000/api/v1/tickets/buy   -H "Content-Type: application/json"   -d '{"ticketId": "3", "payment_type": "CREDIT_CARD", "userId": "user123"}'
+```
+
+#### Exemplo de Response
+```json
+{
+  "success": true,
+  "sale": {
+    "saleId": "1727462738192",
+    "ticketId": "3",
+    "ticketName": "VIP",
+    "userId": "user123",
+    "price": 750,
+    "createdAt": "2025-08-27T15:25:38.192Z"
+  }
+}
+```
+
+---
+
+## 📦 Estoque Inicial
+| Ticket         | Preço (R$) | Quantidade |
+|----------------|------------|------------|
+| General Area   | 95         | 10         |
+| Grandstand     | 175        | 5          |
+| VIP            | 750        | 2          |
+| Golden Circle  | 1250       | 1          |
+
+---
+
+## 📩 Fila de Mensagens
+Cada venda realizada é publicada em uma fila simulada chamada **`validate-purchase`**.  
+No código, isso é representado por um array (`purchaseQueue`) que armazena os eventos de validação.
+
+---
+
+## 🛠️ Estrutura do Projeto
+```
+src/
+├── app.js              # Inicialização da aplicação
+├── routes.js           # Definição das rotas
+├── controllers/        # Controladores HTTP
+│   └── TicketController.js
+├── services/           # Regras de negócio
+│   └── TicketService.js
+└── data/               # Dados simulados
+    └── tickets.js
+```
+
+---
+
+## 🏗️ Build
+Como a aplicação é em Node.js puro, não há necessidade de build.  
+Para rodar em produção:
+```bash
+npm install --production
+npm start
+```
+
+---
+
+## 👨‍💻 Autor
+Desenvolvido por *João Vitor Araujo** ✨
