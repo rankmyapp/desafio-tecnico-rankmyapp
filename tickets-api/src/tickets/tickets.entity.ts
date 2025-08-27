@@ -4,7 +4,9 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
+import { Order } from '../orders/orders.entity';
 
 export enum TicketsType {
   generalArea = 'General Area',
@@ -21,7 +23,7 @@ export class Ticket {
   @Column({
     type: 'enum',
     enum: TicketsType,
-    enumName: 'tickets_type_enum'
+    enumName: 'tickets_type_enum',
   })
   type: TicketsType;
 
@@ -42,4 +44,10 @@ export class Ticket {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @OneToMany(() => Order, (order) => order.ticket, {
+    cascade: true,
+    onDelete: 'CASCADE',
+  })
+  orders: Order[];
 }
