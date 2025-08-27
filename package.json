@@ -1,0 +1,29 @@
+{
+  "name": "desafio-tecnico-rankmyapp",
+  "version": "1.0.0",
+  "description": "<div align=\"center\">\r   <br>\r   <img src=\"https://yt3.ggpht.com/SwG0Lofb6Qx5p3kHTWDLkIqJo2vly7dpAAwk2_CKb_Resx2TLc5DSfPsU37jfjqpcGs7lTFV=s900-c-k-c0x00ffffff-no-rj\" alt=\"RankMyApp\" width=\"200\">\r   <br />\r   <h1 style=\"font-size: 38px;\"># Desafio Tecnico - RankMyApp 2024</h1>\r   <p>Este documento descreve o desafio técnico ao candidato para a vaga de pessoa desenvolvedora - RankyMyApp</p>\r </div>",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/app.js",
+    "start": "node src/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rankmyapp/desafio-tecnico-rankmyapp.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rankmyapp/desafio-tecnico-rankmyapp/issues"
+  },
+  "homepage": "https://github.com/rankmyapp/desafio-tecnico-rankmyapp#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
