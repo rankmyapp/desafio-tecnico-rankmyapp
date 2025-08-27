@@ -51,6 +51,9 @@ export class ValidatePurchaseConsumer extends WorkerHost {
       console.log('Simulando delay');
       await sleep(5000);
 
+      ticket.availableUnits -= 1;
+      await this.repo.save(ticket);
+
       await this.ordersService.update(inComingOrderId, {
         status: 'paid',
       });
