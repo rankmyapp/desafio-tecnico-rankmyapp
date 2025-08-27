@@ -5,10 +5,10 @@ services:
     ports:
       - "3306:3306"
     environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=mydb
-      - MYSQL_USER=daniel
-      - MYSQL_PASSWORD=daniel
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-root}
+      - MYSQL_DATABASE=${DB_DATABASE:-mydb}
+      - MYSQL_USER=${DB_USERNAME:-daniel}
+      - MYSQL_PASSWORD=${DB_PASSWORD:-daniel}
 
   redis:
     image: redis:alpine
@@ -23,4 +23,20 @@ services:
     depends_on:
       - mysql_db
       - redis
-
+    environment:
+      # Database Configuration
+      - DB_TYPE=mysql
+      - DB_HOST=mysql_db
+      - DB_PORT=3306
+      - DB_USERNAME=${DB_USERNAME:-daniel}
+      - DB_PASSWORD=${DB_PASSWORD:-daniel}
+      - DB_DATABASE=${DB_DATABASE:-mydb}
+      - DB_SYNCHRONIZE=${DB_SYNCHRONIZE:-true}
+      
+      # JWT Configuration
+      - JWT_SECRET=${JWT_SECRET:-anySecret}
+      - JWT_EXPIRATION=${JWT_EXPIRATION:-1h}
+      
+      # Redis Configuration
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379

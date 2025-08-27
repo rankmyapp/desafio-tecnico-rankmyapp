@@ -2,20 +2,27 @@ import {
   BadRequestException,
   Injectable,
   NotFoundException,
+  Logger,
 } from '@nestjs/common';
 import { UsersService } from '../users.service';
 import { randomBytes, scrypt as _scrypt } from 'crypto';
 import { promisify } from 'util';
 import { JwtService } from '@nestjs/jwt';
+import { ConfigService } from '@nestjs/config';
 
 const scrypt = promisify(_scrypt);
 
 @Injectable()
 export class AuthService {
+  private readonly logger = new Logger(AuthService.name);
+
   constructor(
     private usersService: UsersService,
     private jwtService: JwtService,
-  ) {}
+    private configService: ConfigService,
+  ) {
+    this.logger.log('Auth Service initialized');
+  }
 
   async signUp(params: { email: string; password: string }) {
     const { email, password } = params;
@@ -49,8 +56,18 @@ export class AuthService {
     }
 
     const payload = { sub: user.id, email: user.email };
+    const jwtExpiration = this.configService.get<string>(
+      'JWT_EXPIRATION',
+      '1h',
+    );
+
+    this.logger.debug(
+      `Generating JWT token for user ID: ${user.id} with expiration: ${jwtExpiration}`,
+    );
     return {
-      access_token: await this.jwtService.signAsync(payload),
+      access_token: await this.jwtService.signAsync(payload, {
+        expiresIn: jwtExpiration,
+      }),
     };
   }
 }

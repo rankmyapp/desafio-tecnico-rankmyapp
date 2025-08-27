@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
@@ -9,25 +10,35 @@ import { Ticket } from './tickets/tickets.entity';
 import { Order } from './orders/orders.entity';
 import { OrdersModule } from './orders/orders.module';
 import { JwtModule } from '@nestjs/jwt';
-import { jwtConstants } from './users/auth/constants';
 import { BullQueueModule } from './bull/bull.module';
 
 
 @Module({
   imports: [
-    JwtModule.register({
-      global: true,
-      secret: jwtConstants.secret,
-      signOptions: { expiresIn: '1h' },
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: '.env',
     }),
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'mysql_db',
-      database: 'mydb',
-      entities: [User, Ticket, Order],
-      synchronize: true,
-      username: 'daniel',
-      password: 'daniel',
+    JwtModule.registerAsync({
+      global: true,
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        secret: configService.get<string>('JWT_SECRET'),
+        signOptions: { expiresIn: configService.get<string>('JWT_EXPIRATION', '1h') },
+      }),
+    }),
+    TypeOrmModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        type: configService.get<any>('DB_TYPE', 'mysql'),
+        host: configService.get<string>('DB_HOST', 'mysql_db'),
+        port: configService.get<number>('DB_PORT', 3306),
+        username: configService.get<string>('DB_USERNAME', 'daniel'),
+        password: configService.get<string>('DB_PASSWORD', 'daniel'),
+        database: configService.get<string>('DB_DATABASE', 'mydb'),
+        entities: [User, Ticket, Order],
+        synchronize: configService.get<boolean>('DB_SYNCHRONIZE', true),
+      }),
     }),
     UsersModule,
     TicketsModule,

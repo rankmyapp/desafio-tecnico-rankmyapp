@@ -118,7 +118,6 @@ export class TicketsService {
     );
     this.logger.debug(`Request user ID: ${reqUserId}`);
 
-    // Validate user authorization
     this.logger.debug(
       `Validating user authorization (userId: ${userId}, reqUserId: ${reqUserId})`,
     );
@@ -130,7 +129,6 @@ export class TicketsService {
     }
     this.logger.debug('User authorization validated successfully');
 
-    // Find and validate ticket
     this.logger.debug(`Finding ticket with ID: ${ticketId}`);
     const ticket = await this.findOne(ticketId);
     if (!ticket) {
@@ -143,7 +141,6 @@ export class TicketsService {
       `Found ticket: ${ticket.type} with ${ticket.availableUnits} available units`,
     );
 
-    // Check ticket availability
     this.logger.debug(
       `Checking ticket availability (available: ${ticket.availableUnits})`,
     );
@@ -155,7 +152,6 @@ export class TicketsService {
     }
     this.logger.debug('Ticket availability confirmed');
 
-    // Create order
     this.logger.debug(
       `Creating order for ticket ID: ${ticketId} and user ID: ${userId}`,
     );
@@ -166,7 +162,6 @@ export class TicketsService {
     });
     this.logger.debug(`Order created with ID: ${order.id}`);
 
-    // Add to processing queue
     this.logger.debug(`Adding order ID: ${order.id} to processing queue`);
     await this.processOrdersQueue.add('buy-ticket', {
       orderId: order.id,
