@@ -1,0 +1,523 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2025-08-27T19:33:50.209Z",
+  "__export_source": "insomnia.desktop.app:v2023.5.8",
+  "resources": [
+    {
+      "_id": "wrk_3112e8b1983d4850a05d7f93414ab77b",
+      "parentId": null,
+      "modified": 1697999926455,
+      "created": 1697999926455,
+      "name": "My Collection",
+      "description": "",
+      "scope": "collection",
+      "_type": "workspace"
+    },
+    {
+      "_id": "fld_4fa1c6034ec94526970e085412184c91",
+      "parentId": "wrk_3112e8b1983d4850a05d7f93414ab77b",
+      "modified": 1756045669433,
+      "created": 1756045669433,
+      "name": "Rank My App",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1756045669433,
+      "_type": "request_group"
+    },
+    {
+      "_id": "fld_2abd07a32487474bb52053a2db2d8a8e",
+      "parentId": "fld_4fa1c6034ec94526970e085412184c91",
+      "modified": 1756262661428,
+      "created": 1756262661428,
+      "name": "Users",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1756262661428,
+      "_type": "request_group"
+    },
+    {
+      "_id": "req_a2893d5f13e44f54b629f5648029fc57",
+      "parentId": "fld_2abd07a32487474bb52053a2db2d8a8e",
+      "modified": 1756319421659,
+      "created": 1756263056977,
+      "url": "http://localhost:3000/api/v1/users/3",
+      "name": "Delete ",
+      "description": "",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiZGFuaWVsbEBtYWlsLmNvbSIsImlhdCI6MTc1NjI5ODA1MSwiZXhwIjoxNzU2MzAxNjUxfQ.RAwy9ZLa7y8j9jpAdS9YWh_JSiB2wYPwZr3pSfw3tHs"
+      },
+      "metaSortKey": -1756262974735,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_cfac92e394fc4cc3b39ca59e021eb8b7",
+      "parentId": "fld_2abd07a32487474bb52053a2db2d8a8e",
+      "modified": 1756319432100,
+      "created": 1756263027189,
+      "url": "http://localhost:3000/api/v1/users/1",
+      "name": "Update User",
+      "description": "",
+      "method": "PATCH",
+      "body": {
+        "mimeType": "application/json",
+        "text": "\t{\n\t\t\"id\": 1,\n\t\t\"email\": \"daniel@mail.com\"\n\t}\n"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "id": "pair_a1860345674449ee89792389015bb499"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiZGFuaWVsbEBtYWlsLmNvbSIsImlhdCI6MTc1NjI5ODA1MSwiZXhwIjoxNzU2MzAxNjUxfQ.RAwy9ZLa7y8j9jpAdS9YWh_JSiB2wYPwZr3pSfw3tHs"
+      },
+      "metaSortKey": -1756262895106,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_8c88d2371efe46e4be52c04c8aae9e9c",
+      "parentId": "fld_2abd07a32487474bb52053a2db2d8a8e",
+      "modified": 1756319441692,
+      "created": 1756262974159,
+      "url": "http://localhost:3000/api/v1/users",
+      "name": "Get by email",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "name": "email",
+          "value": "daniel@mail.com",
+          "disabled": false,
+          "id": "pair_a5492a602f3c49fcb2652baba22ff987"
+        }
+      ],
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiZGFuaWVsbEBtYWlsLmNvbSIsImlhdCI6MTc1NjI5NzA5OCwiZXhwIjoxNzU2Mjk3MTU4fQ.fLE4rLyIbwv0Au9ajutvb0knZd7ih8defFljQLgfSP0",
+          "id": "pair_519f38fbe4494f68a3658b2d5ee8ebd0",
+          "disabled": true
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiZGFuaWVsbEBtYWlsLmNvbSIsImlhdCI6MTc1NjI5ODA1MSwiZXhwIjoxNzU2MzAxNjUxfQ.RAwy9ZLa7y8j9jpAdS9YWh_JSiB2wYPwZr3pSfw3tHs"
+      },
+      "metaSortKey": -1756262895006,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_afbd58d75d37485ab8daa13e2713205e",
+      "parentId": "fld_2abd07a32487474bb52053a2db2d8a8e",
+      "modified": 1756319408323,
+      "created": 1756262947335,
+      "url": "localhost:3000/api/v1/users",
+      "name": "Get All",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "id": "pair_8666167eee0b4a66ba9b4a995edd13eb",
+          "name": "email",
+          "value": "123",
+          "description": "",
+          "disabled": true
+        }
+      ],
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiZGFuaWVsbEBtYWlsLmNvbSIsImlhdCI6MTc1NjI5ODA1MSwiZXhwIjoxNzU2MzAxNjUxfQ.RAwy9ZLa7y8j9jpAdS9YWh_JSiB2wYPwZr3pSfw3tHs",
+          "id": "pair_990f34aad5ed4730a63dbd5bb834b47d",
+          "disabled": true
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiZGFuaWVsQG1haWwuY29tIiwiaWF0IjoxNzU2MzE5MzkxLCJleHAiOjE3NTYzMjY1OTF9.j4KImBuVo_-NrQrKm5olJN_-dorwN1PYKRhR_4z67SA"
+      },
+      "metaSortKey": -1756262818925,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_909a47f7c940464ea84d0e0228cbe4ae",
+      "parentId": "fld_2abd07a32487474bb52053a2db2d8a8e",
+      "modified": 1756319214399,
+      "created": 1756127448470,
+      "url": "localhost:3000/api/v1/users/signin",
+      "name": "SignIn User",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"email\"\t: \"daniel@mail.com\",\n\t\"password\": \"123\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "User-Agent",
+          "value": "insomnia/2023.5.8"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1756262693366,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_14c5af1242db4bf4bdc6faa70d0658f7",
+      "parentId": "fld_2abd07a32487474bb52053a2db2d8a8e",
+      "modified": 1756319455803,
+      "created": 1756045672565,
+      "url": "localhost:3000/api/v1/users/signup",
+      "name": "Signup User",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"email\"\t: \"marques@mail.com\",\n\t\"password\": \"123\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "User-Agent",
+          "value": "insomnia/2023.5.8"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1756262693316,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_c5546ef52c584f0bb9babae0ef841fac",
+      "parentId": "fld_2abd07a32487474bb52053a2db2d8a8e",
+      "modified": 1756319462378,
+      "created": 1756057631071,
+      "url": "localhost:3000/api/v1/users/1",
+      "name": "Get user by id",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "User-Agent",
+          "value": "insomnia/2023.5.8"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiZGFuaWVsbEBtYWlsLmNvbSIsImlhdCI6MTc1NjI5NzIyMSwiZXhwIjoxNzU2Mjk3MjgxfQ.5tvfTgw5iJff5dFz4fCZpkVz-JurXR8lTlTj59kzrzU",
+        "disabled": false
+      },
+      "metaSortKey": -1756262693266,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_a51af8874dad4c7c8917f77bad422339",
+      "parentId": "fld_4fa1c6034ec94526970e085412184c91",
+      "modified": 1756262647592,
+      "created": 1756262647592,
+      "name": "Tickets",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1756262647592,
+      "_type": "request_group"
+    },
+    {
+      "_id": "req_ba3b32ea08194c46a0e344b1b09958f5",
+      "parentId": "fld_a51af8874dad4c7c8917f77bad422339",
+      "modified": 1756319469188,
+      "created": 1756262886053,
+      "url": "http://localhost:3000/api/v1/tickets/1",
+      "name": "Delete",
+      "description": "",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer YOUR_JWT_TOKEN"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1756262883492,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_64756dcf87df4a51abf6eb577157bd7e",
+      "parentId": "fld_a51af8874dad4c7c8917f77bad422339",
+      "modified": 1756319474718,
+      "created": 1756262856065,
+      "url": "http://localhost:3000/api/v1/tickets/1",
+      "name": "Edit tickets",
+      "description": "",
+      "method": "PATCH",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n    \"type\": \"vip\",\n    \"availableUnits\": 50,\n    \"price\": 200,\n    \"name\": \"Updated VIP Ticket\",\n    \"description\": \"Updated VIP access to the concert\"\n  }"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer YOUR_JWT_TOKEN"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1756262785969,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_36aeb4be0c614d299a7035dd4167eab6",
+      "parentId": "fld_a51af8874dad4c7c8917f77bad422339",
+      "modified": 1756319481954,
+      "created": 1756262827032,
+      "url": "http://localhost:3000/api/v1/tickets/1",
+      "name": "Get by Id",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiZGFuaWVsQG1haWwuY29tIiwiaWF0IjoxNzU2Mjk5MDY5LCJleHAiOjE3NTYzMDI2Njl9.jG3OlK-bPhmdtiC3aiU_ZMe4WxZIi7swYNt-YwwYNY4"
+      },
+      "metaSortKey": -1756262785869,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_40537ac44425412189f5cdd859b5e175",
+      "parentId": "fld_a51af8874dad4c7c8917f77bad422339",
+      "modified": 1756319525253,
+      "created": 1756262788808,
+      "url": "http://localhost:3000/api/v1/tickets/catalog",
+      "name": "Get All Catalog",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiZGFuaWVsQG1haWwuY29tIiwiaWF0IjoxNzU2MzE3MDExLCJleHAiOjE3NTYzMjQyMTF9.vt3MRZHb739nuU7i9jeHSDPMIxPRPxnynmFZ_XoaYtE"
+      },
+      "metaSortKey": -1756262785769,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_ecfa20f95ccc4e2a8b89bdb33b38f020",
+      "parentId": "fld_a51af8874dad4c7c8917f77bad422339",
+      "modified": 1756319500421,
+      "created": 1756262742153,
+      "url": "http://localhost:3000/api/v1/tickets",
+      "name": "Post Tickets",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n    \"type\": \"VIP\",\n    \"availableUnits\": 1,\n    \"price\": 150\n  }"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "id": "pair_90fa1104d82d47a0a22dcb959bcdd285"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiZGFuaWVsQG1haWwuY29tIiwiaWF0IjoxNzU2Mjk5MDY5LCJleHAiOjE3NTYzMDI2Njl9.jG3OlK-bPhmdtiC3aiU_ZMe4WxZIi7swYNt-YwwYNY4"
+      },
+      "metaSortKey": -1756262738739,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_04fc4d1f0940494e9cf452b05caa0a48",
+      "parentId": "fld_a51af8874dad4c7c8917f77bad422339",
+      "modified": 1756319506326,
+      "created": 1756160645955,
+      "url": "localhost:3000/api/v1/tickets/buy",
+      "name": "Buy ",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"ticketId\"\t: 4,\n\t\"userId\": 1,\n\t\"paymentType\": \"CREDIT_CARD\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "User-Agent",
+          "value": "insomnia/2023.5.8"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiZGFuaWVsQG1haWwuY29tIiwiaWF0IjoxNzU2MzAxMjc5LCJleHAiOjE3NTYzMDQ4Nzl9.HgEKTO7vYRjG2dnopGeEG8aT4FVG4pTruX9Qgr2s1I8"
+      },
+      "metaSortKey": -1756262681111,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_20ce708ac8df4ef3b976168ce569b29a",
+      "parentId": "fld_a51af8874dad4c7c8917f77bad422339",
+      "modified": 1756319535911,
+      "created": 1756160931219,
+      "url": "localhost:3000/api/v1/tickets",
+      "name": "Create Ticket",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"type\"\t: \"goldenCircle\",\n\t\"availableUnits\": 101,\n\t\"price\": 101,\n\t\"name\": \"marron 11\",\n\t\"description\": \"Atrás da colunas\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "User-Agent",
+          "value": "insomnia/2023.5.8"
+        }
+      ],
+      "authentication": {
+        "type": "bearer"
+      },
+      "metaSortKey": -1756262681011,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    }
+  ]
+}

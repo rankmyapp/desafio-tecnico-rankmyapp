@@ -1,41 +1,293 @@
-<div align="center">
-  <br>
-  <img src="https://yt3.ggpht.com/SwG0Lofb6Qx5p3kHTWDLkIqJo2vly7dpAAwk2_CKb_Resx2TLc5DSfPsU37jfjqpcGs7lTFV=s900-c-k-c0x00ffffff-no-rj" alt="RankMyApp" width="200">
-  <br />
-  <h1 style="font-size: 38px;"># Desafio Tecnico - RankMyApp 2024</h1>
-  <p>Este documento descreve o desafio técnico ao candidato para a vaga de pessoa desenvolvedora - RankyMyApp</p>
-</div>
+# Tickets API - Concert Ticket Sales System
 
-## Considerações sobre o desafio
+This project is a RESTful API for selling concert tickets, built with NestJS. It allows users to browse available tickets, make purchases.
 
-- Ir direto ao ponto.
-- Aplicar **boas práticas de código** e de reuso **sempre que possível**.
-- Poderá utilizar uma das seguintes linguages de Programação ou Plataformas de Execução: Node.js ou GoLang
-- Utilização de containers (Docker) é primordial para a avaliação.
-- Em relação aos dados, estes poderão ser armazenados em memória durante a execução do desafio ou em banco de dados (relacional, não-relacional, chave-valor etc.). Escolha o que achar que faz mais sentido para o problema.
-- Escreva um README.md (Markdown) para documentar a aplicação, configuração do ambiente, execução e build.
-- Ao finalizar o desafio e o executar corretamente, o código produzidor deverá ser enviado com um PR para o repositório em questão, no seguinte padrão `<GITHUB_USERNAME>/backend-challenge`
+## Features
 
-## Desafio
+- User authentication (signup/signin)
+- Ticket catalog with availability information
+- Ticket purchase system
+- Order processing with message queue
+- API versioning
 
-O desafio pode ser acessado através da senioridade da vaga e no arquivo `desafio-tecnico.md`.
+## Description
 
-## Avaliação
+## Getting Started
 
-A sua solução será avaliada durante a execução do desafio (Live Coding) e posteriormente pelo time ténico aqui da RankyMyApp, com base nos seguintes critérios:
+### Prerequisites
 
-### Execução
+- Node.js (v14 or higher)
+- npm or yarn
+- Docker and Docker Compose (for running the database and Redis)
 
-- **Objetivo:** A solução antingiu o objetivo?
-- **Execução:** A solução enviada contém todas as instruções necessárias para executarmos sua solução? Todos os requisitos foram implementados na solução entregue?
-- **Build:** A solução contém instruções claras para configurarmos o ambiente e fazer o build?
-- **Performance:** A solução possui uma performance adequada?
+### Installation
 
-### Código
+1. Clone the repository
 
-- **Manutenibilidade e extensibilidade:** O código escrito é de fácil leitura? O quão fácil é criar novas funcionalidades na solução existente?
-- **Arquitetura e Design:** Como está desenhada a arquitetura da solução? As responsabilidades estão bem definidas? Foi utilizada alguma técnica para guiar o desenvolvimento?
+```bash
+git clone https://github.com/yourusername/desafio-tecnico-rankmyapp.git
+cd desafio-tecnico-rankmyapp/tickets-api
+```
 
-Desejamos todo sucesso a você candidato e esperamos que você se divirta codificando essa solução. Qualquer duvida sobre o desafio pode ser levantada no momento da aplicação do desafio em conjunto com o avaliador no momento.
+2. Install dependencies
 
-Bom código! 😄⚡
+```bash
+npm install
+```
+
+3. Set up environment variables
+
+```bash
+touch .env
+# Create a new file .env and using the .env.example change the variables as it needed
+```
+
+4. Start the database and Redis using Docker
+
+```bash
+cd ..
+docker-compose up -d
+```
+
+The API will be available at http://localhost:3000
+
+## Main Endpoints
+
+
+
+#### Sign Up
+
+```
+POST /api/v1/users/signup
+```
+
+Request body:
+```json
+{
+  "email": "user@example.com",
+  "password": "password123"
+}
+```
+
+Response:
+```json
+{
+  "id": 1,
+  "email": "user@example.com",
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}
+```
+
+#### Sign In
+
+```
+POST /api/v1/users/signin
+```
+
+Request body:
+```json
+{
+  "email": "user@example.com",
+  "password": "password123"
+}
+```
+
+Response:
+```json
+{
+  "id": 1,
+  "email": "user@example.com",
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}
+```
+I have the following endpoints in a collention that can be imported in your Insomnia or Postman. Here is the link to the collection: [tickets-api-collection.json](tickets-api-collection.json)
+
+
+I also create a user authentication thro each endpoint so to access them you guys will need a Bearer token in each request. `/api/v1/users/signin`
+
+### Tickets
+
+#### Get Ticket Catalog
+
+```
+GET /api/v1/tickets/catalog
+```
+
+Headers:
+```
+Authorization: Bearer <access_token>
+```
+
+Response:
+```json
+[
+  {
+    "id": 1,
+    "type": "General Area",
+    "availableUnits": 10,
+    "price": 95,
+    "name": "General Admission",
+    "description": "Standing room only",
+    "createdAt": "2023-01-01T00:00:00.000Z",
+    "updatedAt": "2023-01-01T00:00:00.000Z"
+  },
+  {
+    "id": 2,
+    "type": "Grandstand",
+    "availableUnits": 5,
+    "price": 175,
+    "name": "Grandstand Seating",
+    "description": "Reserved seating",
+    "createdAt": "2023-01-01T00:00:00.000Z",
+    "updatedAt": "2023-01-01T00:00:00.000Z"
+  },
+  // More tickets...
+]
+```
+
+#### Create Ticket
+
+```
+POST /api/v1/tickets
+```
+
+Headers:
+```
+Authorization: Bearer <access_token>
+```
+
+Request body:
+```json
+{
+  "type": "General Area",
+  "availableUnits": 10,
+  "price": 95,
+  "name": "General Admission",
+  "description": "Standing room only"
+}
+```
+
+Response:
+```json
+{
+  "id": 1,
+  "type": "General Area",
+  "availableUnits": 10,
+  "price": 95,
+  "name": "General Admission",
+  "description": "Standing room only",
+  "createdAt": "2023-01-01T00:00:00.000Z",
+  "updatedAt": "2023-01-01T00:00:00.000Z"
+}
+```
+
+#### Buy Ticket
+
+```
+POST /api/v1/tickets/buy
+```
+
+Headers:
+```
+Authorization: Bearer <access_token>
+```
+
+Request body:
+```json
+{
+  "ticketId": 1,
+  "paymentType": "CREDIT_CARD",
+  "userId": 1
+}
+```
+
+Response:
+```json
+{
+  "status": "pendingPayment"
+}
+```
+
+## Architecture
+
+This application follows a modular architecture using NestJS framework:
+
+- **Controllers**: Handle HTTP requests and responses
+- **Services**: Contain business logic
+- **Entities**: Define database models
+- **DTOs**: Define data transfer objects for validation
+- **Queue**: Uses BullMQ for asynchronous processing
+
+All sensitive information is stored in environment variables for security.
+
+## Project setup
+
+```bash
+$ npm install
+```
+
+## Compile and run the project
+
+```bash
+# development
+$ npm run start
+
+# watch mode
+$ npm run start:dev
+
+# production mode
+$ npm run start:prod
+```
+
+## Run tests
+
+```bash
+# unit tests
+$ npm run test
+
+# e2e tests
+$ npm run test:e2e
+
+# test coverage
+$ npm run test:cov
+```
+
+## Deployment
+
+When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+
+If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+
+```bash
+$ npm install -g @nestjs/mau
+$ mau deploy
+```
+
+With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+
+## Resources
+
+Check out a few resources that may come in handy when working with NestJS:
+
+- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
+- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
+- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
+- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
+- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
+- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
+- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
+- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+
+## Support
+
+Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+
+## Stay in touch
+
+- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
+- Website - [https://nestjs.com](https://nestjs.com/)
+- Twitter - [@nestframework](https://twitter.com/nestframework)
+
+## License
+
+Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
