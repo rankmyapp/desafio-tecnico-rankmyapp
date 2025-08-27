@@ -31,10 +31,10 @@ export class Ticket {
   @Column()
   price: number;
 
-  @Column()
+  @Column({ nullable: true })
   name?: string;
 
-  @Column()
+  @Column({ nullable: true })
   description?: string;
 
   @CreateDateColumn()

@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { OrdersController } from './orders.controller';
+// import { OrdersController } from './orders.controller';
 import { OrdersService } from './orders.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ValidatePurchaseConsumer } from './validate-purchase.consumer';
@@ -9,7 +9,7 @@ import { Ticket } from '../tickets/tickets.entity';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Order, Ticket])],
-  controllers: [OrdersController],
+  controllers: [],
   providers: [OrdersService, ValidatePurchaseConsumer],
   exports: [OrdersService],
 })

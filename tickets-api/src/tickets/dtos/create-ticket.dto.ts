@@ -1,4 +1,4 @@
-import { IsEnum, IsNumber, IsString } from 'class-validator';
+import { IsEnum, IsNumber, IsOptional, IsString } from 'class-validator';
 import { TicketsType } from '../tickets.entity';
 
 export class CreateTicketDto {
@@ -13,13 +13,11 @@ export class CreateTicketDto {
   @IsNumber()
   price: number;
 
-  @IsString({
-    always: false,
-  })
+  @IsOptional()
+  @IsString()
   name?: string;
 
-  @IsString({
-    always: false,
-  })
+  @IsOptional()
+  @IsString()
   description?: string;
 }
