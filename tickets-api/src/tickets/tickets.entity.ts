@@ -7,10 +7,10 @@ import {
 } from 'typeorm';
 
 export enum TicketsType {
-  generalArea = 'generalArea',
-  grandStand = 'grandStand',
-  vip = 'vip',
-  goldenCircle = 'goldenCircle',
+  generalArea = 'General Area',
+  grandStand = 'Grand Stand',
+  vip = 'VIP',
+  goldenCircle = 'Golden Circle',
 }
 
 @Entity()
