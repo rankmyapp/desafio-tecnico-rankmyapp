@@ -22,6 +22,7 @@ describe('TicketsService', () => {
     create: jest.fn(),
     save: jest.fn(),
     findOneBy: jest.fn(),
+    findOne: jest.fn(),
     find: jest.fn(),
     remove: jest.fn(),
   });
@@ -74,14 +75,38 @@ describe('TicketsService', () => {
       };
       const createdTicket = { ...ticketData, id: 1 } as Ticket;
 
+      repository.findOne.mockResolvedValue(null);
       repository.create.mockReturnValue(createdTicket);
       repository.save.mockResolvedValue(createdTicket);
 
       const result = await service.create(ticketData);
 
+      expect(repository.findOne).toHaveBeenCalledWith({
+        where: { type: ticketData.type },
+      });
       expect(repository.create).toHaveBeenCalledWith(ticketData);
       expect(repository.save).toHaveBeenCalledWith(createdTicket);
       expect(result).toEqual(createdTicket);
+    });
+
+    it('should throw BadRequestException when creating a ticket with a type that already exists', async () => {
+      const ticketData = {
+        type: TicketsType.vip,
+        availableUnits: 100,
+        price: 50,
+      };
+      const existingTicket = { ...ticketData, id: 1 } as Ticket;
+
+      repository.findOne.mockResolvedValue(existingTicket);
+
+      await expect(service.create(ticketData)).rejects.toThrow(
+        BadRequestException,
+      );
+      expect(repository.findOne).toHaveBeenCalledWith({
+        where: { type: ticketData.type },
+      });
+      expect(repository.create).not.toHaveBeenCalled();
+      expect(repository.save).not.toHaveBeenCalled();
     });
   });
 
@@ -207,7 +232,7 @@ describe('TicketsService', () => {
   });
 
   describe('buy', () => {
-    it('should throw BadRequestException if ticketId is not the same as reqUserId', async () => {
+    it('should throw BadRequestException if userId is not the same as reqUserId', async () => {
       const params = { ticketId: 1, userId: 2, reqUserId: 3 };
 
       await expect(service.buy(params)).rejects.toThrow(BadRequestException);
@@ -217,7 +242,7 @@ describe('TicketsService', () => {
     });
 
     it('should throw NotFoundException if ticket is not found', async () => {
-      const params = { ticketId: 1, userId: 2, reqUserId: 1 };
+      const params = { ticketId: 1, userId: 2, reqUserId: 2 };
       repository.findOneBy.mockResolvedValue(null);
 
       await expect(service.buy(params)).rejects.toThrow(NotFoundException);
@@ -229,7 +254,7 @@ describe('TicketsService', () => {
     });
 
     it('should throw InternalServerErrorException if no tickets are available', async () => {
-      const params = { ticketId: 1, userId: 2, reqUserId: 1 };
+      const params = { ticketId: 1, userId: 2, reqUserId: 2 };
       repository.findOneBy.mockResolvedValue({
         id: 1,
         availableUnits: 0,

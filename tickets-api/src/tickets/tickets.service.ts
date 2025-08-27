@@ -19,7 +19,7 @@ export class TicketsService {
     @InjectQueue('validate-purchase') private processOrdersQueue: Queue,
   ) {}
 
-  create(params: {
+  async create(params: {
     type: TicketsType;
     availableUnits: number;
     price: number;
@@ -27,6 +27,14 @@ export class TicketsService {
     description?: string;
   }) {
     const { type, availableUnits, price, name, description } = params;
+
+    const existingTicket = await this.repo.findOne({ where: { type } });
+    if (existingTicket) {
+      throw new BadRequestException(
+        `A ticket with type '${type}' already exists`,
+      );
+    }
+
     const ticket = this.repo.create({
       type,
       availableUnits,
@@ -70,7 +78,7 @@ export class TicketsService {
 
     console.log('INcoming reqUserId', reqUserId);
 
-    if (ticketId !== reqUserId) {
+    if (userId !== reqUserId) {
       throw new BadRequestException('The user id is not the same');
     }
 
