@@ -77,16 +77,17 @@ describe('OrdersService', () => {
       expect(result).toEqual(mockOrder);
     });
 
-    it('should return null if order is not found', async () => {
+    it('should throw NotFoundException if order is not found', async () => {
       repository.findOne.mockResolvedValue(null);
 
-      const result = await service.findOne(999);
+      await expect(service.findOne(999)).rejects.toThrow(
+        new NotFoundException('No order found with ID: 999'),
+      );
 
       expect(repository.findOne).toHaveBeenCalledWith({
         where: { id: 999 },
         relations: ['user', 'ticket'],
       });
-      expect(result).toBeNull();
     });
   });
 

@@ -1,5 +1,6 @@
 import { Exclude } from 'class-transformer';
 import { Order } from '../orders/orders.entity';
+import { Logger } from '@nestjs/common';
 import {
   Entity,
   Column,
@@ -13,6 +14,8 @@ import {
 
 @Entity()
 export class User {
+  private static readonly logger = new Logger('User');
+
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -34,16 +37,16 @@ export class User {
 
   @AfterInsert()
   logInsert() {
-    console.log(`Inserted with id: ${this.id}`);
+    User.logger.log(`User inserted with id: ${this.id}`);
   }
 
   @AfterRemove()
   logRemove() {
-    console.log(`Removed with id: ${this.id}`);
+    User.logger.log(`User removed with id: ${this.id}`);
   }
 
   @AfterUpdate()
   logUpdate() {
-    console.log(`Updated with id: ${this.id}`);
+    User.logger.log(`User updated with id: ${this.id}`);
   }
 }

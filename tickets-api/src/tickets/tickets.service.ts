@@ -3,6 +3,7 @@ import {
   Injectable,
   InternalServerErrorException,
   NotFoundException,
+  Logger,
 } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Ticket, TicketsType } from './tickets.entity';
@@ -13,6 +14,8 @@ import { Queue } from 'bullmq';
 
 @Injectable()
 export class TicketsService {
+  private readonly logger = new Logger(TicketsService.name);
+
   constructor(
     @InjectRepository(Ticket) private repo: Repository<Ticket>,
     private ordersService: OrdersService,
@@ -26,15 +29,22 @@ export class TicketsService {
     name?: string;
     description?: string;
   }) {
+    this.logger.log(`Creating new ticket with type: ${params.type}`);
     const { type, availableUnits, price, name, description } = params;
 
+    this.logger.debug(`Checking if ticket with type ${type} already exists`);
     const existingTicket = await this.repo.findOne({ where: { type } });
     if (existingTicket) {
-      throw new BadRequestException(
-        `A ticket with type '${type}' already exists`,
+      this.logger.warn(
+        `Ticket with type ${type} already exists - creation rejected`,
       );
+      throw new BadRequestException(`Ticket with type ${type} already exists`);
     }
+    this.logger.debug('No duplicate ticket found, proceeding with creation');
 
+    this.logger.debug(
+      `Creating ticket entity with ${availableUnits} units at price ${price}`,
+    );
     const ticket = this.repo.create({
       type,
       availableUnits,
@@ -43,66 +53,127 @@ export class TicketsService {
       description,
     });
 
-    return this.repo.save(ticket);
+    this.logger.debug('Saving ticket to database');
+    const savedTicket = await this.repo.save(ticket);
+    this.logger.log(`Ticket created successfully with ID: ${savedTicket.id}`);
+    return savedTicket;
   }
 
-  findOne(id: number) {
-    return this.repo.findOneBy({ id });
+  async findOne(id: number) {
+    this.logger.log(`Finding ticket with ID: ${id}`);
+    const ticket = await this.repo.findOneBy({ id });
+    if (ticket) {
+      this.logger.debug(`Found ticket with ID: ${id}`);
+    } else {
+      this.logger.debug(`No ticket found with ID: ${id}`);
+    }
+    return ticket;
   }
 
-  find(filters: Partial<Ticket> = {}) {
-    return this.repo.find({ where: filters });
+  async find(filters: Partial<Ticket> = {}) {
+    this.logger.log(`Finding tickets with filters: ${JSON.stringify(filters)}`);
+    const tickets = await this.repo.find({ where: filters });
+    this.logger.debug(`Found ${tickets.length} tickets matching filters`);
+    return tickets;
   }
 
   async update(id: number, params: Partial<Ticket>) {
+    this.logger.log(`Updating ticket with ID: ${id}`);
+    this.logger.debug(`Update parameters: ${JSON.stringify(params)}`);
+
     const ticket = await this.findOne(id);
     if (!ticket) {
+      this.logger.warn(`Ticket with ID: ${id} not found - update failed`);
       throw new NotFoundException('Ticket not found');
     }
 
+    this.logger.debug(`Applying updates to ticket ${id}`);
     Object.assign(ticket, params);
-    return this.repo.save(ticket);
+
+    this.logger.debug('Saving updated ticket to database');
+    const updatedTicket = await this.repo.save(ticket);
+    this.logger.log(`Ticket ${id} updated successfully`);
+    return updatedTicket;
   }
 
   async remove(id: number) {
+    this.logger.log(`Removing ticket with ID: ${id}`);
+
     const ticket = await this.findOne(id);
     if (!ticket) {
+      this.logger.warn(`Ticket with ID: ${id} not found - removal failed`);
       throw new NotFoundException('Ticket not found');
     }
 
-    return this.repo.remove(ticket);
+    this.logger.debug(`Removing ticket ${id} from database`);
+    const removedTicket = await this.repo.remove(ticket);
+    this.logger.log(`Ticket ${id} removed successfully`);
+    return removedTicket;
   }
 
   async buy(params: { ticketId: number; userId: number; reqUserId: number }) {
     const { ticketId, userId, reqUserId } = params;
+    this.logger.log(
+      `Processing purchase request for ticket ID: ${ticketId} by user ID: ${userId}`,
+    );
+    this.logger.debug(`Request user ID: ${reqUserId}`);
 
-    console.log('INcoming reqUserId', reqUserId);
-
+    // Validate user authorization
+    this.logger.debug(
+      `Validating user authorization (userId: ${userId}, reqUserId: ${reqUserId})`,
+    );
     if (userId !== reqUserId) {
+      this.logger.warn(
+        `Authorization failed - userId (${userId}) doesn't match reqUserId (${reqUserId})`,
+      );
       throw new BadRequestException('The user id is not the same');
     }
+    this.logger.debug('User authorization validated successfully');
 
-    const ticket = await this.repo.findOneBy({
-      id: ticketId,
-    });
-
+    // Find and validate ticket
+    this.logger.debug(`Finding ticket with ID: ${ticketId}`);
+    const ticket = await this.findOne(ticketId);
     if (!ticket) {
+      this.logger.warn(
+        `Ticket with ID: ${ticketId} not found - purchase failed`,
+      );
       throw new NotFoundException('Ticket not found!');
     }
+    this.logger.debug(
+      `Found ticket: ${ticket.type} with ${ticket.availableUnits} available units`,
+    );
 
+    // Check ticket availability
+    this.logger.debug(
+      `Checking ticket availability (available: ${ticket.availableUnits})`,
+    );
     if (!ticket.availableUnits) {
+      this.logger.warn(
+        `No available units for ticket ID: ${ticketId} - purchase failed`,
+      );
       throw new InternalServerErrorException('No tickets available!');
     }
+    this.logger.debug('Ticket availability confirmed');
 
+    // Create order
+    this.logger.debug(
+      `Creating order for ticket ID: ${ticketId} and user ID: ${userId}`,
+    );
     const order = await this.ordersService.create({
       status: 'pendingPayment',
       ticketId: ticketId,
       userId: userId,
     });
+    this.logger.debug(`Order created with ID: ${order.id}`);
 
+    // Add to processing queue
+    this.logger.debug(`Adding order ID: ${order.id} to processing queue`);
     await this.processOrdersQueue.add('buy-ticket', {
       orderId: order.id,
     });
+    this.logger.log(
+      `Purchase request for ticket ID: ${ticketId} processed successfully, order ID: ${order.id}`,
+    );
 
     return {
       status: order.status,
