@@ -17,7 +17,7 @@ import { UsersService } from './users.service';
 import { AuthService } from './auth/auth.service';
 import { AuthGuard } from './auth/auth.guard';
 
-@Controller('users')
+@Controller({ path: 'users', version: '1' })
 export class UsersController {
   constructor(
     private usersService: UsersService,

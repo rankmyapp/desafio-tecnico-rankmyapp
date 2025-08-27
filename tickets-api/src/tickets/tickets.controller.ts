@@ -15,7 +15,7 @@ import { CreateTicketDto } from './dtos/create-ticket.dto';
 import { BuyTicketDto } from './dtos/buy-ticket.dto';
 import { AuthGuard } from 'src/users/auth/auth.guard';
 
-@Controller('tickets')
+@Controller({ path: 'tickets', version: '1' })
 export class TicketsController {
   private readonly logger = new Logger(TicketsController.name);
 
@@ -28,6 +28,13 @@ export class TicketsController {
       `Received request to create ticket with type: ${body.type}`,
     );
     return this.ticketsService.create(body);
+  }
+
+  @Get('catalog')
+  @UseGuards(AuthGuard)
+  getCatalog() {
+    this.logger.log('Received request to get ticket catalog with available stock');
+    return this.ticketsService.find();
   }
 
   @Get()
@@ -59,7 +66,7 @@ export class TicketsController {
     return this.ticketsService.remove(parseInt(id));
   }
 
-  @Post('/buy')
+  @Post('buy')
   @UseGuards(AuthGuard)
   buy(@Body() body: BuyTicketDto, @Req() req) {
     const userId = req.user.sub as number;
