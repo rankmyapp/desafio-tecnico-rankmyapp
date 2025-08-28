@@ -1,41 +1,70 @@
-<div align="center">
-  <br>
-  <img src="https://yt3.ggpht.com/SwG0Lofb6Qx5p3kHTWDLkIqJo2vly7dpAAwk2_CKb_Resx2TLc5DSfPsU37jfjqpcGs7lTFV=s900-c-k-c0x00ffffff-no-rj" alt="RankMyApp" width="200">
-  <br />
-  <h1 style="font-size: 38px;"># Desafio Tecnico - RankMyApp 2024</h1>
-  <p>Este documento descreve o desafio técnico ao candidato para a vaga de pessoa desenvolvedora - RankyMyApp</p>
-</div>
+# DESAFIO RANKMYAPP
 
-## Considerações sobre o desafio
+API REST em Go (Gin) com:
+- Autenticação JWT (signup/login)
+- CRUD de usuários (listar, obter, atualizar, deletar), paginação e filtro por nome/email
+- Publicação de mensagens no RabbitMQ no signup
+- Worker consumidor que envia e-mails via SMTP (MailHog em dev)
+- GORM + Postgres, Docker Compose, testes unitários
 
-- Ir direto ao ponto.
-- Aplicar **boas práticas de código** e de reuso **sempre que possível**.
-- Poderá utilizar uma das seguintes linguages de Programação ou Plataformas de Execução: Node.js ou GoLang
-- Utilização de containers (Docker) é primordial para a avaliação.
-- Em relação aos dados, estes poderão ser armazenados em memória durante a execução do desafio ou em banco de dados (relacional, não-relacional, chave-valor etc.). Escolha o que achar que faz mais sentido para o problema.
-- Escreva um README.md (Markdown) para documentar a aplicação, configuração do ambiente, execução e build.
-- Ao finalizar o desafio e o executar corretamente, o código produzidor deverá ser enviado com um PR para o repositório em questão, no seguinte padrão `<GITHUB_USERNAME>/backend-challenge`
+## Requisitos
+- Go 1.22+
+- Docker e Docker Compose
 
-## Desafio
+## Como rodar com Docker
+1. Copie `.env.example` para `.env` (opcional)
+2. Suba os serviços:
+    # Go Gin JWT API + RabbitMQ + Worker (SMTP)
 
-O desafio pode ser acessado através da senioridade da vaga e no arquivo `desafio-tecnico.md`.
+API REST em Go (Gin) com:
+- Autenticação JWT (signup/login)
+- CRUD de usuários (listar, obter, atualizar, deletar), paginação e filtro por nome/email
+- Publicação de mensagens no RabbitMQ no signup
+- Worker consumidor que envia e-mails via SMTP (MailHog em dev)
+- GORM + Postgres, Docker Compose, testes unitários
 
-## Avaliação
+## Requisitos
+- Go 1.22+
+- Docker e Docker Compose
 
-A sua solução será avaliada durante a execução do desafio (Live Coding) e posteriormente pelo time ténico aqui da RankyMyApp, com base nos seguintes critérios:
+## Como rodar com Docker
+1. Copie `.env.example` para `.env` (opcional)
+2. Suba os serviços:
+docker compose up -d --build
 
-### Execução
+3. API: http://localhost:8080
+4. RabbitMQ UI: http://localhost:15672 (user: guest / pass: guest)
+5. MailHog UI: http://localhost:8025
 
-- **Objetivo:** A solução antingiu o objetivo?
-- **Execução:** A solução enviada contém todas as instruções necessárias para executarmos sua solução? Todos os requisitos foram implementados na solução entregue?
-- **Build:** A solução contém instruções claras para configurarmos o ambiente e fazer o build?
-- **Performance:** A solução possui uma performance adequada?
+## Rodar local sem Docker
+1. Suba Postgres, RabbitMQ e MailHog localmente
+2. Exporte variáveis de ambiente (ou use `.env`)
+3. Instale dependências: `go mod tidy`
+4. API: `go run ./cmd/api`
+5. Worker: `go run ./cmd/worker`
 
-### Código
+## Endpoints
+- POST /api/v1/auth/signup
+- POST /api/v1/auth/login
+- GET /api/v1/users (auth)
+- GET /api/v1/users/:id (auth)
+- PUT /api/v1/users/:id (auth)
+- DELETE /api/v1/users/:id (auth)
 
-- **Manutenibilidade e extensibilidade:** O código escrito é de fácil leitura? O quão fácil é criar novas funcionalidades na solução existente?
-- **Arquitetura e Design:** Como está desenhada a arquitetura da solução? As responsabilidades estão bem definidas? Foi utilizada alguma técnica para guiar o desenvolvimento?
+Authorization: Bearer <token>
 
-Desejamos todo sucesso a você candidato e esperamos que você se divirta codificando essa solução. Qualquer duvida sobre o desafio pode ser levantada no momento da aplicação do desafio em conjunto com o avaliador no momento.
+Exemplos cURL:
+curl -s -X GET
+localhost:8080/health
+ curl -s -X POST 
+localhost:8080/api/v1/signup
+-H "Content-Type: application/json"
+-d '{"name":"Kaue","email":"kaue@example.com","password":"StrongPass123!"}'
 
-Bom código! 😄⚡
+## Testes
+go test ./... -v
+
+
+## Notas
+- Em dev, MailHog captura e-mails (UI em http://localhost:8025).
+- Ajuste JWT_EXPIRES_IN (ex.: "1h", "30m").
